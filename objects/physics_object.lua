@@ -1,4 +1,4 @@
-PhysicsObject = Object:new()
+local PhysicsObject = Object:new()
 
 function PhysicsObject:init(x, y, w, h)
     self.x = x or 0
@@ -43,3 +43,5 @@ function PhysicsObject:move_y(y, tag)
     end
     return col
 end
+
+return PhysicsObject

@@ -1,15 +1,19 @@
-Game = {}
+local Game = {}
+
+local Player = require("objects.player")
+local Tile = require("objects.tile")
 
 function Game:add(object, ...)
     local o = object:new()
     o:init(...)
     table.insert(self.objects, o)
+    return o
 end
 
 function Game:init()
     self.objects = {}
     self:add(Player, 100, 100)
-    self:add(Wall, 200, 100)
+    self:add(Tile, 200, 100)
 end
 
 function Game:update(dt)

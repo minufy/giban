@@ -11,13 +11,9 @@ function love.load()
     
     love.graphics.setDefaultFilter("nearest", "nearest")
     love.graphics.setLineStyle("rough")
-    
-    local objects = love.filesystem.getDirectoryItems("objects")
-    for _, object in ipairs(objects) do
-        require("objects."..object:sub(1, #object-#".lua"))
-    end
 
     Font = love.graphics.newFont("assets/fonts/Galmuri9.ttf", 10)
+    TILE_SIZE = 32
 
     Res:init()
     SM:init("game")

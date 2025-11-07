@@ -1,4 +1,5 @@
-Player = PhysicsObject:new()
+local PhysicsObject = require("objects.physics_object")
+local Player = PhysicsObject:new()
 
 local img = NewImage("player")
 
@@ -22,13 +23,15 @@ end
 function Player:update(dt)
     Camera:set(self.x, self.y)
     if Input.right.down then
-        self:move_x(4*dt, "wall")
+        self:move_x(4*dt, "tile")
     end
     if Input.left.down then
-        self:move_x(-4*dt, "wall")
+        self:move_x(-4*dt, "tile")
     end
 end
 
 function Player:draw()
     love.graphics.draw(img, self.x, self.y)
 end
+
+return Player
