@@ -52,3 +52,6 @@ Input.mb = {new(), new(), new()}
 Input.wheel = new()
 Input.right = new({"right", "d"})
 Input.left = new({"left", "a"})
+
+Input.ctrl = new({"lctrl"})
+Input.reload = new({"r"})

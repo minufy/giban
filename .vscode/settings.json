@@ -11,5 +11,5 @@
     "Lua.diagnostics.globals": [
         "rgb",
         "rgba"
-    ]
+    ],
 }
