@@ -44,11 +44,6 @@ function Game:draw()
     end
 
     Camera:stop()
-
-    Res:pass(function ()
-        love.graphics.setFont(FontHigh)
-        love.graphics.print("test", 10*SCALE, 50*SCALE)
-    end)
 end
 
 return Game

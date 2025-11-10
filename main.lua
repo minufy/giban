@@ -8,7 +8,7 @@ require("stuff.utils")
 
 function love.load()
     -- load before setting filter
-    FontHigh = love.graphics.newFont(60)
+    -- FontHigh = love.graphics.newFont(60)
     
     love.graphics.setDefaultFilter("nearest", "nearest")
     love.graphics.setLineStyle("rough")
