@@ -17,7 +17,7 @@ function Game:init()
 end
 
 function Game:update(dt)
-    for i = 1, #self.objects do
+    for i = #self.objects,  1, -1 do
         local object = self.objects[i]
         if object.update then
             object:update(dt)
