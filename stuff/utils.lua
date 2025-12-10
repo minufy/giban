@@ -14,12 +14,12 @@ function ResetColor()
     love.graphics.setColor(1, 1, 1, 1)
 end
 
-function Dist(a, b, d)
+function Dist(a, b)
     local ax = a.x+a.w/2
     local ay = a.y+a.h/2
     local bx = b.x+b.w/2
     local by = b.y+b.h/2
-    return math.sqrt((ax-bx)^2+(ay-by)^2) <= d
+    return math.sqrt((ax-bx)^2+(ay-by)^2)
 end
 
 function Sign(x)

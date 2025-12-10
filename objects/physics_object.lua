@@ -12,7 +12,7 @@ function PhysicsObject:dist(tag, r)
     local found = {}
     for _, other in ipairs(Current.objects) do
         if other.tags[tag] then
-            if self ~= other and Dist(self, other, r) then
+            if self ~= other and Dist(self, other) <= r then
                 table.insert(found, other)
             end
         end
