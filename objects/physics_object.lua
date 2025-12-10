@@ -1,3 +1,4 @@
+---@class PhysicsObject:Object
 local PhysicsObject = Object:new()
 
 function PhysicsObject:init(x, y, w, h)

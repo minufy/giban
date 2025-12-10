@@ -1,7 +1,7 @@
 SM = {}
 Current = nil
 
-function SM:init(name)
+function SM:load(name)
     Current = require("scenes."..name)
     Current:init()
 end

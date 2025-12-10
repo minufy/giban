@@ -1,3 +1,4 @@
+---@class Object
 Object = {}
 
 function Object:new(obj)
