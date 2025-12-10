@@ -7,11 +7,10 @@ Camera.x = 0
 Camera.y = 0
 Camera.damp_x = 0.1
 Camera.damp_y = 0.1
-Camera.shake = {}
-Camera.shake.damp = 0.1
-Camera.shake.x = 0
-Camera.shake.y = 0
-Camera.shake.duration = 0
+Camera.shake_damp = 0.1
+Camera.shake_x = 0
+Camera.shake_y = 0
+Camera.shake_duration = 0
 Camera.on = false
 
 function Camera:set(x, y)
@@ -29,14 +28,14 @@ function Camera:snap_back()
     self.y = -self.offset_y+self.target_y
 end
 
-function Camera:set_shake(dur)
-    self.shake.duration = dur
+function Camera:shake(dur)
+    self.shake_duration = dur
 end
 
 function Camera:start()
     love.graphics.push()
-    if self.shake.duration > 0.1 then
-        love.graphics.translate(self.shake.x, self.shake.y)
+    if self.shake_duration > 0.1 then
+        love.graphics.translate(self.shake_x, self.shake_y)
     end
     love.graphics.translate(-self.x, -self.y)
     self.on = true
@@ -48,11 +47,11 @@ function Camera:stop()
 end
 
 function Camera:update(dt)
-    if self.shake.duration > 0.1 then
-        self.shake.x = math.random(-self.shake.duration, self.shake.duration)
-        self.shake.y = math.random(-self.shake.duration, self.shake.duration)
+    if self.shake_duration > 0.1 then
+        self.shake_x = math.random(-self.shake_duration, self.shake_duration)
+        self.shake_y = math.random(-self.shake_duration, self.shake_duration)
     end
-    self.shake.duration = self.shake.duration+(0-self.shake.duration)*self.shake.damp*dt
+    self.shake_duration = self.shake_duration+(0-self.shake_duration)*self.shake_damp*dt
     
     self.x = self.x+(-self.offset_x+self.target_x-self.x)*self.damp_x*dt
     self.y = self.y+(-self.offset_y+self.target_y-self.y)*self.damp_y*dt
