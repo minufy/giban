@@ -1,4 +1,4 @@
----@class PhysicsObject:Object
+---@class PhysicsObject : Object
 local PhysicsObject = Object:new()
 
 function PhysicsObject:init()

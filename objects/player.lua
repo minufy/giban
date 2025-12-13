@@ -1,6 +1,6 @@
 local PhysicsObject = require("objects.physics_object")
 
----@class Player:PhysicsObject
+---@class Player : PhysicsObject
 local Player = PhysicsObject:new()
 
 local img = NewImage("player")

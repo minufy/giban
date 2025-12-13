@@ -12,7 +12,7 @@ end
 
 function Game:init()
     self.objects = {}
-    self:add(Player, 100, 100)
+    self.player = self:add(Player, 100, 100)
     self:add(Tile, 200, 100)
 end
 

@@ -1,4 +1,4 @@
----@class Tile:Object
+---@class Tile : Object
 local Tile = Object:new()
 
 function Tile:init(x, y)
