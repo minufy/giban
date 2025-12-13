@@ -1,11 +1,11 @@
 ---@class PhysicsObject:Object
 local PhysicsObject = Object:new()
 
-function PhysicsObject:init(x, y, w, h)
-    self.x = x or 0
-    self.y = y or 0
-    self.w = w or 0
-    self.h = h or 0
+function PhysicsObject:init()
+    self.x = 0
+    self.y = 0
+    self.w = 0
+    self.h = 0
 end
 
 function PhysicsObject:dist(tag, r)
