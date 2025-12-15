@@ -18,7 +18,7 @@ function love.load()
     Sounds = {}
 
     Res:init()
-    SM:load("game")
+    SM:load("game.game")
 end
 
 function love.update(dt)

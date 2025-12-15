@@ -50,5 +50,11 @@ end
 
 Input.mb = {new(), new(), new()}
 Input.wheel = new()
+
+Input.swap_mode = new({"tab"})
+Input.toggle_editor = new({"`"})
+Input.ctrl = new({"lctrl"})
+Input.save = new({"s"})
+
 Input.right = new({"right", "d"})
 Input.left = new({"left", "a"})

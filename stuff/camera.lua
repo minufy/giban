@@ -13,6 +13,11 @@ Camera.shake_y = 0
 Camera.shake_duration = 0
 Camera.on = false
 
+function Camera:add(x, y)
+    self.target_x = self.target_x+x
+    self.target_y = self.target_y+y
+end
+
 function Camera:set(x, y)
     self.target_x = x
     self.target_y = y

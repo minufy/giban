@@ -8,32 +8,48 @@ function PhysicsObject:init()
     self.h = 0
 end
 
-function PhysicsObject:dist(tag, r)
+function PhysicsObject:dist(group_names, r)
     local found = {}
-    for _, other in ipairs(Current.objects) do
-        if other.tags[tag] then
-            if self ~= other and Dist(self, other) <= r then
-                table.insert(found, other)
+    for _, group_names in ipairs(group_names) do
+        local group = Current.objects[group_names]
+        if group ~= nil then
+            for _, other in ipairs(Current.objects[group]) do
+                if self ~= other and Dist(self, other) <= r then
+                    table.insert(found, other)
+                end
             end
         end
     end
     return found
 end
 
-function PhysicsObject:col(tag)
-    for _, other in ipairs(Current.objects) do
-        if other.tags[tag] then
-            if self ~= other and AABB(self, other) then
-                return other
+function PhysicsObject:col(group_names)
+    for _, group_names in ipairs(group_names) do
+        local group = Current.objects[group_names]
+        if group ~= nil then
+            local col = self:col_table(group)
+            if col ~= nil then
+                return col
             end
         end
     end
     return nil
 end
 
-function PhysicsObject:move_x(x, tag)
+function PhysicsObject:col_table(table)
+    for _, other in ipairs(table) do
+        if self ~= other and AABB(self, other) then
+            return other
+        end
+    end
+    return nil
+end
+
+function PhysicsObject:move_x(x)
     self.x = self.x+x
-    local col = self:col(tag)
+    local tiles = Current.objects["tiles"][1]
+    local around = tiles:around(math.floor(self.x/TILE_SIZE+0.5), math.floor(self.y/TILE_SIZE+0.5))
+    local col = self:col_table(around)
     if col then
         if x > 0 then
             self.x = col.x-self.w
@@ -44,9 +60,11 @@ function PhysicsObject:move_x(x, tag)
     return col
 end
 
-function PhysicsObject:move_y(y, tag)
+function PhysicsObject:move_y(y)
     self.y = self.y+y
-    local col = self:col(tag)
+    local tiles = Current.objects["tiles"][1]
+    local around = tiles:around(math.floor(self.x/TILE_SIZE+0.5), math.floor(self.y/TILE_SIZE+0.5))
+    local col = self:col_table(around)
     if col then
         if y > 0 then
             self.y = col.y-self.h

@@ -1,0 +1,62 @@
+local Game = {}
+
+local Edit = require("scenes.game.edit")
+Edit.attach(Game)
+
+local Level = require("scenes.game.level")
+Level.attach(Game)
+
+function Game:add(group_name, object, ...)
+    local o = object:new()
+    o:init(...)
+    if self.objects[group_name] == nil then
+        self.objects[group_name] = {}
+    end
+    table.insert(self.objects[group_name], o)
+    return o
+end
+
+function Game:init()
+    self.objects = {}
+    Edit.init(self)
+    Level.init(self)
+end
+
+function Game:update(dt)
+    Edit.update(self, dt)
+
+    if not self.editing then
+        for group_name, group in pairs(self.objects) do
+            for i = #self.objects[group_name],  1, -1 do
+                local object = self.objects[group_name][i]
+                if object.update then
+                    object:update(dt)
+                end
+                if object.remove then
+                    table.remove(self.objects[group_name], i)
+                end
+            end
+        end
+    end
+end
+
+function Game:draw()
+    love.graphics.setColor(rgb(50, 75, 117))
+    love.graphics.rectangle("fill", 0, 0, Res.w, Res.h)
+    ResetColor()
+    
+    Edit.draw(self)
+    
+    Camera:start()
+    for group_name, group in pairs(self.objects) do
+        for _, object in ipairs(group) do
+            if object.draw then
+                object:draw()
+            end
+        end
+    end
+
+    Camera:stop()
+end
+
+return Game

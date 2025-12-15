@@ -16,19 +16,15 @@ function Player:init(x, y)
     Camera:offset(Res.w/2, Res.h/2)
     Camera:set(self.x, self.y)
     Camera:snap_back()
-
-    self.tags = {
-        player = true,
-    }
 end
 
 function Player:update(dt)
     Camera:set(self.x, self.y)
     if Input.right.down then
-        self:move_x(4*dt, "tile")
+        self:move_x(4*dt)
     end
     if Input.left.down then
-        self:move_x(-4*dt, "tile")
+        self:move_x(-4*dt)
     end
 end
 
