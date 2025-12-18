@@ -45,7 +45,9 @@ function Game:draw()
     love.graphics.rectangle("fill", 0, 0, Res.w, Res.h)
     ResetColor()
     
-    Edit.draw(self)
+    if self.editing then
+        Edit.draw(self)
+    end
     
     Camera:start()
     for group_name, group in pairs(self.objects) do

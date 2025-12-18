@@ -32,8 +32,16 @@ function Mouse:update(dt)
     if Input.swap_mode.pressed then
         self.tile_mode = not self.tile_mode
         self.current_i = 1
-        self:bound_i()
-        self:find_name()
+        self:set()
+    end
+    
+    if Input.wheel.up then
+        self.current_i = self.current_i+1
+        self:set()
+    end
+    if Input.wheel.down then
+        self.current_i = self.current_i-1
+        self:set()
     end
 
     if Input.mb[3].down then
@@ -52,9 +60,9 @@ function Mouse:update(dt)
         end
     else
         if Input.mb[1].pressed then
-            Current:add_object(self.x, self.y, self.current_name)
+            Current:add_object(self.tile_x*TILE_SIZE, self.tile_y*TILE_SIZE, self.current_name)
         elseif Input.mb[2].pressed then
-            local col = self:col({self.current_name})
+            local col = self:col({self.current_name})[1]
             if col ~= nil then
                 Current:remove_object(col.key)
             end
@@ -63,8 +71,15 @@ function Mouse:update(dt)
 end
 
 function Mouse:draw()
-    love.graphics.circle("fill", Res:getX(), Res:getY(), 2)
-    love.graphics.print(self.current_name)
+    local x, y = Res:getX(), Res:getY()
+    love.graphics.circle("fill", x, y, 2)
+    love.graphics.setFont(Font)
+    love.graphics.print(self.current_name, x, y)
+end
+
+function Mouse:set()
+    self:bound_i()
+    self:find_name()
 end
 
 function Mouse:find_name()
