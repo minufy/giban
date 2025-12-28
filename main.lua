@@ -16,6 +16,7 @@ function love.load()
     TILE_SIZE = 32
 
     Sounds = {}
+    -- NewSound("jump")
 
     Res:init()
     SM:load("game.game")

@@ -42,7 +42,18 @@ function NewImage(name)
     return love.graphics.newImage("assets/imgs/"..name..".png")
 end
 
-function PlaySound(name)
-    Sounds[name]:stop()
-    Sounds[name]:play()
+function NewSound(name, volume)
+    volume = volume or 0.5
+    local sound = {
+        source = love.audio.newSource("assets/sounds/"..name..".ogg", "static"),
+        volume = volume
+    }
+    function sound:play(volume)
+        volume = volume or self.volume
+        self.source:setVolume(volume)
+        self.source:stop()
+        self.source:play()
+    end
+    Sounds[name] = sound
+    return sound
 end
