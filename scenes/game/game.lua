@@ -1,4 +1,4 @@
-local Game = {}
+Game = {}
 
 local Edit = require("scenes.game.edit")
 Edit.attach(Game)

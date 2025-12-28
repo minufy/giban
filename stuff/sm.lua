@@ -1,15 +1,14 @@
 SM = {}
-Current = nil
 
 function SM:load(name)
-    Current = require("scenes."..name)
-    Current:init()
+    self.current = require("scenes."..name)
+    self.current:init()
 end
 
 function SM:update(dt)
-    Current:update(dt)
+    self.current:update(dt)
 end
 
 function SM:draw()
-    Current:draw()
+    self.current:draw()
 end

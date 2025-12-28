@@ -54,17 +54,17 @@ function Mouse:update(dt)
 
     if self.tile_mode then
         if Input.mb[1].down then
-            Current:add_tile(self.tile_x, self.tile_y, self.current_name)
+            Game:add_tile(self.tile_x, self.tile_y, self.current_name)
         elseif Input.mb[2].down then
-            Current:remove_tile(self.tile_x, self.tile_y)
+            Game:remove_tile(self.tile_x, self.tile_y)
         end
     else
         if Input.mb[1].pressed then
-            Current:add_object(self.tile_x*TILE_SIZE, self.tile_y*TILE_SIZE, self.current_name)
+            Game:add_object(self.tile_x*TILE_SIZE, self.tile_y*TILE_SIZE, self.current_name)
         elseif Input.mb[2].pressed then
             local col = self:col({self.current_name})[1]
             if col ~= nil then
-                Current:remove_object(col.key)
+                Game:remove_object(col.key)
             end
         end
     end
