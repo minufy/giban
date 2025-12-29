@@ -73,8 +73,7 @@ function NewImage(name)
     else
         Log("failed to load "..path)
         return love.graphics.newImage("assets/imgs/error.png")
-    end
-    
+    end 
 end
 
 function NewSound(name, volume)
