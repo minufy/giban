@@ -4,6 +4,8 @@ local PhysicsObject = require("objects.physics_object")
 local Mouse = PhysicsObject:new()
 
 function Mouse:init()
+    self.group_name = "mouse"
+
     PhysicsObject.init(self)
     self.x = 0
     self.y = 0

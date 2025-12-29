@@ -6,9 +6,10 @@ Edit.attach(Game)
 local Level = require("scenes.game.level")
 Level.attach(Game)
 
-function Game:add(group_name, object, ...)
+function Game:add(object, ...)
     local o = object:new()
     o:init(...)
+    local group_name = o.group_name
     if self.objects[group_name] == nil then
         self.objects[group_name] = {}
     end

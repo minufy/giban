@@ -36,9 +36,9 @@ end
 
 function Level.reload(self)
     self.objects = {}
-    self:add("tiles", Tiles, self.level.tiles)
+    self:add(Tiles, self.level.tiles)
     for k, o in pairs(self.level.objects) do
-        local object = self:add(o.type, object_table[o.type], o.x, o.y)
+        local object = self:add(object_table[o.type], o.x, o.y)
         object.key = k
     end
 end

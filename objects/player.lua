@@ -6,6 +6,8 @@ local Player = PhysicsObject:new()
 local img = NewImage("player")
 
 function Player:init(x, y)
+    self.group_name = "player"
+
     PhysicsObject.init(self)
 
     self.x = x

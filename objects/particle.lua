@@ -1,4 +1,4 @@
-Particle = Object:new()
+local Particle = Object:new()
 
 function Particle:init(x, y, mx, my, size, color)
     self.group_name = "particle"

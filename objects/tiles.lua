@@ -2,6 +2,8 @@
 local Tiles = Object:new()
 
 function Tiles:init(tiles)
+    self.group_name = "tiles"
+    
     self.tiles = tiles
 end
 
