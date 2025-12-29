@@ -13,6 +13,7 @@ function love.load()
     love.graphics.setLineStyle("rough")
 
     Font = love.graphics.newFont("assets/fonts/Galmuri9.ttf", 10)
+    LogFont = love.graphics.newFont(20)
     TILE_SIZE = 32
 
     Sounds = {}
@@ -28,10 +29,12 @@ function love.update(dt)
     Camera:update(dt)
     SM:update(dt)
     ResetWheelInput()
+    UpdateLog(dt)
 end
 
 function love.draw()
     Res:before()
     SM:draw()
     Res:after()
+    DrawLog()
 end

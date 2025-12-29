@@ -38,8 +38,43 @@ function AABB(a, b)
            b.y < a.y+a.h
 end
 
+Logs = {}
+LogTime = 240
+function Log(...)
+    for i, text in ipairs({...}) do
+        text = os.date().." : "..text
+        table.insert(Logs, {text=text, timer=0})
+        print(text)
+    end
+end
+
+function DrawLog()
+    love.graphics.setFont(LogFont)
+    for i, log in ipairs(Logs) do
+        love.graphics.setColor(1, 1, 1, 1-log.timer/LogTime)
+        love.graphics.print(log.text, 0, (i-1)*LogFont:getHeight())
+    end
+    ResetColor()
+end
+
+function UpdateLog(dt)
+    for i=#Logs, 1, -1 do
+        Logs[i].timer = Logs[i].timer+dt
+        if Logs[i].timer > LogTime then
+            table.remove(Logs, i)
+        end
+    end
+end
+
 function NewImage(name)
-    return love.graphics.newImage("assets/imgs/"..name..".png")
+    local path = "assets/imgs/"..name..".png"
+    if love.filesystem.getInfo(path) then
+        return love.graphics.newImage(path)
+    else
+        Log("failed to load "..path)
+        return love.graphics.newImage("assets/imgs/error.png")
+    end
+    
 end
 
 function NewSound(name, volume)
