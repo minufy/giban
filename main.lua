@@ -6,14 +6,12 @@ require("stuff.sm")
 require("stuff.utils")
 
 function love.load()
-    -- load before setting filter
-    -- FontHigh = love.graphics.newFont(60)
+    LogFont = love.graphics.newFont(20)
     
     love.graphics.setDefaultFilter("nearest", "nearest")
     love.graphics.setLineStyle("rough")
 
     Font = love.graphics.newFont("assets/fonts/Galmuri9.ttf", 10)
-    LogFont = love.graphics.newFont(20)
     TILE_SIZE = 32
 
     Sounds = {}
