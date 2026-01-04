@@ -44,16 +44,32 @@ function Edit.draw(self)
 end
 
 function Edit.add_object(self, x, y, type)
-    self.level.objects[x..","..y..","..type] = {
+    local data = {
         x = x,
         y = y,
         type = type,
     }
+    self.level.objects[tostring(data)] = data
+    self:reload()
+end
+
+function Edit.add_img_object(self, x, y, type)
+    local data = {
+        x = x,
+        y = y,
+        type = type,
+    }
+    self.level.img_objects[tostring(data)] = data
     self:reload()
 end
 
 function Edit.remove_object(self, key)
     self.level.objects[key] = nil
+    self:reload()
+end
+
+function Edit.remove_img_object(self, key)
+    self.level.img_objects[key] = nil
     self:reload()
 end
 
@@ -68,6 +84,18 @@ function Edit.add_tile(self, x, y, type)
         y = y,
         type = type
     }
+    self:reload()
+end
+
+function Edit.move_object(self, x, y, key)
+    self.level.objects[key].x = x
+    self.level.objects[key].y = y
+    self:reload()
+end
+
+function Edit.move_img_object(self, x, y, key)
+    self.level.img_objects[key].x = x
+    self.level.img_objects[key].y = y
     self:reload()
 end
 
@@ -88,7 +116,11 @@ function Edit.attach(Game)
     Game.remove_tile = Edit.remove_tile
     Game.add_tile = Edit.add_tile
     Game.remove_object = Edit.remove_object
+    Game.remove_img_object = Edit.remove_img_object
     Game.add_object = Edit.add_object
+    Game.add_img_object = Edit.add_img_object
+    Game.move_object = Edit.move_object
+    Game.move_img_object = Edit.move_img_object
     Game.save = Edit.save
 end
 

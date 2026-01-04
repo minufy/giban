@@ -1,6 +1,7 @@
 local Level = {}
 
 local Tiles = require("objects.tiles")
+local Img = require("objects.img")
 
 TILE_TYPES = {
     "tile",
@@ -18,6 +19,14 @@ for i, type in ipairs(OBJECT_TYPES) do
     object_table[type] = require("objects."..type)
 end
 
+IMG_TYPES = {
+    "test"
+}
+IMG_TABLE = {}
+for i, type in ipairs(IMG_TYPES) do
+    IMG_TABLE[type] = NewImage(type)
+end
+
 function Level.init(self)
     self.level_index = 1
     self:load_level()
@@ -31,6 +40,9 @@ function Level.load_level(self)
     if self.level.objects == nil then
         self.level.objects = {}
     end
+    if self.level.img_objects == nil then
+        self.level.img_objects = {}
+    end
     self:reload()
 end
 
@@ -39,6 +51,10 @@ function Level.reload(self)
     self:add(Tiles, self.level.tiles)
     for k, o in pairs(self.level.objects) do
         local object = self:add(object_table[o.type], o.x, o.y)
+        object.key = k
+    end
+    for k, o in pairs(self.level.img_objects) do
+        local object = self:add(Img, o.x, o.y, o.type)
         object.key = k
     end
 end

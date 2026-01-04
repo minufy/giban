@@ -28,11 +28,15 @@ function Mouse:update(dt)
     self.x = Res:getX()+Camera.x
     self.y = Res:getY()+Camera.y
 
+    self.dx = self.dx-Res:getX()
+    self.dy = self.dy-Res:getY()
+    
     self.tile_x = math.floor(self.x/TILE_SIZE)
     self.tile_y = math.floor(self.y/TILE_SIZE)
-    
+
     if Input.swap_mode.pressed then
         self.tile_mode = not self.tile_mode
+        self.selected = nil
         self.current_i = 1
         self:set()
     end
@@ -47,13 +51,9 @@ function Mouse:update(dt)
     end
 
     if Input.mb[3].down then
-        self.dx = self.dx-Res:getX()
-        self.dy = self.dy-Res:getY()
         Camera:add(self.dx, self.dy)
     end
-    self.dx = Res:getX()
-    self.dy = Res:getY()
-
+    
     if self.tile_mode then
         if Input.mb[1].down then
             Game:add_tile(self.tile_x, self.tile_y, self.current_name)
@@ -61,22 +61,68 @@ function Mouse:update(dt)
             Game:remove_tile(self.tile_x, self.tile_y)
         end
     else
+        if Input.shift.down and Input.add.pressed then
+            if IMG_TABLE[self.current_name] == nil then
+                Game:add_object(self.tile_x*TILE_SIZE, self.tile_y*TILE_SIZE, self.current_name)
+            else
+                Game:add_img_object(self.tile_x*TILE_SIZE, self.tile_y*TILE_SIZE, self.current_name)
+            end
+        end
+
         if Input.mb[1].pressed then
-            Game:add_object(self.tile_x*TILE_SIZE, self.tile_y*TILE_SIZE, self.current_name)
-        elseif Input.mb[2].pressed then
-            local col = self:col({self.current_name})[1]
+            local group_names = {}
+            for i, type in ipairs(OBJECT_TYPES) do
+                table.insert(group_names, type)
+            end
+            table.insert(group_names, "img")
+            local col = self:col(group_names)[1]
+            self.selected = nil
             if col ~= nil then
-                Game:remove_object(col.key)
+                self.selected = col
             end
         end
     end
+    if self.selected then
+        if Input.mb[1].down then
+            self.selected.x = self.selected.x-self.dx
+            self.selected.y = self.selected.y-self.dy
+        elseif Input.mb[1].up then
+            local grid = TILE_SIZE/2
+            local x = math.floor(self.selected.x/grid+0.5)*grid
+            local y = math.floor(self.selected.y/grid+0.5)*grid
+            self.selected.x = x
+            self.selected.y = y
+            if self.selected.group_name == "img" then
+                Game:move_img_object(x, y, self.selected.key)
+            else
+                Game:move_object(x, y, self.selected.key)
+            end
+        end
+        if Input.delete.pressed then
+            if self.selected.group_name == "img" then
+                Game:remove_img_object(self.selected.key)
+            else
+                Game:remove_object(self.selected.key)
+            end
+            self.selected = nil
+        end
+    end
+
+    self.dx = Res:getX()
+    self.dy = Res:getY()
 end
 
 function Mouse:draw()
-    local x, y = Res:getX(), Res:getY()
+    local x, y = Res:getX()+Camera.x, Res:getY()+Camera.y
     love.graphics.circle("fill", x, y, 2)
     love.graphics.setFont(Font)
-    love.graphics.print(self.current_name, x, y)
+    love.graphics.print(self.current_name, x+10, y+10)
+    if self.selected ~= nil then
+        love.graphics.setLineWidth(4)
+        love.graphics.setColor(1, 1, 1, 0.7)
+        love.graphics.rectangle("line", self.selected.x, self.selected.y, self.selected.w, self.selected.h)
+    end
+    ResetColor()
 end
 
 function Mouse:set()
@@ -88,7 +134,11 @@ function Mouse:find_name()
     if self.tile_mode then
         self.current_name = TILE_TYPES[self.current_i]
     else
-        self.current_name = OBJECT_TYPES[self.current_i]
+        if self.current_i > #OBJECT_TYPES then
+            self.current_name = IMG_TYPES[self.current_i-#OBJECT_TYPES]
+        else
+            self.current_name = OBJECT_TYPES[self.current_i]
+        end
     end
 end
 
@@ -101,8 +151,8 @@ function Mouse:bound_i()
             self.current_i = #TILE_TYPES
         end
     else
-        if self.current_i > #OBJECT_TYPES then
-            self.current_i = #OBJECT_TYPES
+        if self.current_i > #OBJECT_TYPES+#IMG_TYPES then
+            self.current_i = #OBJECT_TYPES+#IMG_TYPES
         end
     end
 end
