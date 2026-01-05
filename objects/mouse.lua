@@ -19,9 +19,113 @@ function Mouse:init()
     self.w = 1
     self.h = 1
 
+    self.start_x = self.x
+    self.start_y = self.y
+    self.end_x = self.x
+    self.end_y = self.y
+    self.selection = PhysicsObject:new()
+    self.selection:init()
+    self.selected_objects = {}
+    
     self.tile_mode = true
     self.current_name = "tile"
     self.current_i = 1
+end
+
+local function get_group_names()
+    local group_names = {}
+    for i, type in ipairs(OBJECT_TYPES) do
+        table.insert(group_names, type)
+    end
+    table.insert(group_names, "img")
+    return group_names
+end
+
+function Mouse:draw_selection()
+    if not self.tile_mode and Input.mb[1].down then
+        love.graphics.setColor(1, 1, 1, 0.2)
+        love.graphics.rectangle("fill", self.selection.x, self.selection.y, self.selection.w, self.selection.h)
+    end
+end
+
+function Mouse:update_selection(dt)
+    if Input.mb[1].pressed then
+        local col = self:col(get_group_names())
+        if #col > 0 then
+            self.selected_objects = col
+            return
+        end
+    end
+
+    if Input.mb[1].down then
+        self.end_x = self.x
+        self.end_y = self.y
+    end
+
+    if self.start_x < self.end_x then
+        self.selection.w = self.end_x-self.start_x
+        self.selection.x = self.start_x
+    else
+        self.selection.w = self.start_x-self.end_x
+        self.selection.x = self.start_x-self.selection.w
+    end
+    if self.start_y < self.end_y then
+        self.selection.h = self.end_y-self.start_y
+        self.selection.y = self.start_y
+    else
+        self.selection.h = self.start_y-self.end_y
+        self.selection.y = self.start_y-self.selection.h
+    end
+    
+    if Input.mb[1].released then
+        local col = self.selection:col(get_group_names())
+        self.selected_objects = col
+    end
+end
+
+function Mouse:draw_selected_objects()
+    for i, object in ipairs(self.selected_objects) do
+        love.graphics.setLineWidth(4)
+        love.graphics.setColor(0, 1, 1, 0.6)
+        love.graphics.rectangle("line", object.x, object.y, object.w, object.h)
+    end
+end
+
+function Mouse:update_selected_objects(dt)
+    if Input.mb[1].pressed then
+        local col = self:col(get_group_names())
+        if #col == 0 then
+            self.selected_objects = {}
+            return
+        end
+    end
+    for i, object in ipairs(self.selected_objects) do
+        if Input.mb[1].down then
+            object.x = object.x-self.dx
+            object.y = object.y-self.dy
+        elseif Input.mb[1].up then
+            local grid = TILE_SIZE/2
+            local x = math.floor(object.x/grid+0.5)*grid
+            local y = math.floor(object.y/grid+0.5)*grid
+            object.x = x
+            object.y = y
+            if object.group_name == "img" then
+                Game:move_img_object(x, y, object.key)
+            else
+                Game:move_object(x, y, object.key)
+            end
+        end
+        if Input.delete.pressed then
+            if object.group_name == "img" then
+                Game:remove_img_object(object.key)
+            else
+                Game:remove_object(object.key)
+            end
+        end
+    end
+    if Input.deselect.pressed or Input.delete.pressed then
+        self.selected_objects = {}
+    end
 end
 
 function Mouse:update(dt)
@@ -36,7 +140,7 @@ function Mouse:update(dt)
 
     if Input.swap_mode.pressed then
         self.tile_mode = not self.tile_mode
-        self.selected = nil
+        self.selected_objects = {}
         self.current_i = 1
         self:set()
     end
@@ -70,41 +174,17 @@ function Mouse:update(dt)
         end
 
         if Input.mb[1].pressed then
-            local group_names = {}
-            for i, type in ipairs(OBJECT_TYPES) do
-                table.insert(group_names, type)
-            end
-            table.insert(group_names, "img")
-            local col = self:col(group_names)[1]
-            self.selected = nil
-            if col ~= nil then
-                self.selected = col
-            end
+            self.start_x = self.x
+            self.start_y = self.y
         end
-    end
-    if self.selected then
-        if Input.mb[1].down then
-            self.selected.x = self.selected.x-self.dx
-            self.selected.y = self.selected.y-self.dy
-        elseif Input.mb[1].up then
-            local grid = TILE_SIZE/2
-            local x = math.floor(self.selected.x/grid+0.5)*grid
-            local y = math.floor(self.selected.y/grid+0.5)*grid
-            self.selected.x = x
-            self.selected.y = y
-            if self.selected.group_name == "img" then
-                Game:move_img_object(x, y, self.selected.key)
-            else
-                Game:move_object(x, y, self.selected.key)
-            end
+        if #self.selected_objects > 0 then
+            self:update_selected_objects(dt)
+        else
+            self:update_selection(dt)
         end
-        if Input.delete.pressed then
-            if self.selected.group_name == "img" then
-                Game:remove_img_object(self.selected.key)
-            else
-                Game:remove_object(self.selected.key)
-            end
-            self.selected = nil
+        if Input.mb[1].released then
+            self.selection.w = 0
+            self.selection.h = 0
         end
     end
 
@@ -117,10 +197,11 @@ function Mouse:draw()
     love.graphics.circle("fill", x, y, 2)
     love.graphics.setFont(Font)
     love.graphics.print(self.current_name, x+10, y+10)
-    if self.selected ~= nil then
-        love.graphics.setLineWidth(4)
-        love.graphics.setColor(1, 1, 1, 0.7)
-        love.graphics.rectangle("line", self.selected.x, self.selected.y, self.selected.w, self.selected.h)
+    
+    if #self.selected_objects > 0 then
+        self:draw_selected_objects()
+    else
+        self:draw_selection()
     end
     ResetColor()
 end
