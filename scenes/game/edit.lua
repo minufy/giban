@@ -2,7 +2,7 @@ local lume = require("modules.lume")
 
 local Edit = {}
 
-local Mouse = require("objects.mouse")
+local Mouse = require("objects.mouse.mouse")
 
 function Edit.init(self)
     self.editing = false

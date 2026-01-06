@@ -48,16 +48,16 @@ function Game:draw()
     
     Camera:start()
     
-    if self.editing then
-        Edit.draw(self)
-    end
-
     for group_name, group in pairs(self.objects) do
         for _, object in ipairs(group) do
             if object.draw then
                 object:draw()
             end
         end
+    end
+    
+    if self.editing then
+        Edit.draw(self)
     end
 
     Camera:stop()
