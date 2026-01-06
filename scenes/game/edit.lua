@@ -49,7 +49,7 @@ function Edit.add_object(self, x, y, type)
         y = y,
         type = type,
     }
-    self.level.objects[tostring(data)] = data
+    self.level.objects[tostring(data):sub(8)] = data
     self:reload()
 end
 
@@ -59,7 +59,7 @@ function Edit.add_img_object(self, x, y, type)
         y = y,
         type = type,
     }
-    self.level.img_objects[tostring(data)] = data
+    self.level.img_objects[tostring(data):sub(8)] = data
     self:reload()
 end
 
