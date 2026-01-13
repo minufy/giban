@@ -59,9 +59,4 @@ function Level.reload(self)
     end
 end
 
-function Level.attach(Game)
-    Game.load_level = Level.load_level
-    Game.reload = Level.reload
-end
-
 return Level

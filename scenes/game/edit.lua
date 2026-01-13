@@ -112,16 +112,4 @@ function Edit.save(self)
     end
 end
 
-function Edit.attach(Game)
-    Game.remove_tile = Edit.remove_tile
-    Game.add_tile = Edit.add_tile
-    Game.remove_object = Edit.remove_object
-    Game.remove_img_object = Edit.remove_img_object
-    Game.add_object = Edit.add_object
-    Game.add_img_object = Edit.add_img_object
-    Game.move_object = Edit.move_object
-    Game.move_img_object = Edit.move_img_object
-    Game.save = Edit.save
-end
-
 return Edit

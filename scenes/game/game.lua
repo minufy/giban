@@ -1,10 +1,19 @@
 Game = {}
 
 local Edit = require("scenes.game.edit")
-Edit.attach(Game)
+Game.remove_tile = Edit.remove_tile
+Game.add_tile = Edit.add_tile
+Game.remove_object = Edit.remove_object
+Game.remove_img_object = Edit.remove_img_object
+Game.add_object = Edit.add_object
+Game.add_img_object = Edit.add_img_object
+Game.move_object = Edit.move_object
+Game.move_img_object = Edit.move_img_object
+Game.save = Edit.save
 
 local Level = require("scenes.game.level")
-Level.attach(Game)
+Game.load_level = Level.load_level
+Game.reload = Level.reload
 
 function Game:add(object, ...)
     local o = object:new()
@@ -27,7 +36,7 @@ function Game:update(dt)
     Edit.update(self, dt)
 
     if not self.editing then
-        for group_name, group in pairs(self.objects) do
+        for group_name, _ in pairs(self.objects) do
             for i = #self.objects[group_name],  1, -1 do
                 local object = self.objects[group_name][i]
                 if object.update then
@@ -42,7 +51,7 @@ function Game:update(dt)
 end
 
 function Game:draw()
-    love.graphics.setColor(rgb(50, 75, 117))
+    love.graphics.setColor(rgb(49, 77, 121))
     love.graphics.rectangle("fill", 0, 0, Res.w, Res.h)
     ResetColor()
     

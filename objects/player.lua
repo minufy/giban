@@ -15,12 +15,12 @@ function Player:init(x, y)
     self.w = img:getWidth()
     self.h = img:getHeight()
 
-    self.camera_init = false
+    self.inited = false
 end
 
 function Player:update(dt)
-    if not self.camera_init then
-        self.camera_init = true
+    if not self.inited then
+        self.inited = true
         Camera:offset(Res.w/2, Res.h/2)
         Camera:set(self.x, self.y)
         Camera:snap_back()

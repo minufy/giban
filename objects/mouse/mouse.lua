@@ -6,20 +6,20 @@ local Selection = require("objects.mouse.selection")
 local Mouse = PhysicsObject:new()
 
 function Mouse:init()
+    PhysicsObject.init(self)
+    
     self.group_name = "mouse"
 
-    PhysicsObject.init(self)
     self.x = 0
     self.y = 0
-
+    self.w = 1
+    self.h = 1
+    
     self.tile_x = 0
     self.tile_y = 0
 
     self.dx = 0
     self.dy = 0
-    
-    self.w = 1
-    self.h = 1
     self.selection = Selection:new()
     self.selection:init(self)
     
@@ -56,6 +56,7 @@ function Mouse:update(dt)
 
     if Input.mb[3].down then
         Camera:add(self.dx, self.dy)
+        Camera:snap_back()
     end
     
     if self.tile_mode then
