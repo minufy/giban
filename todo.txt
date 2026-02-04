@@ -1,3 +1,3 @@
-ctrl c v z y d
+ctrl c v y d x
 drag select / create tiles
 no collision tiles

@@ -59,6 +59,7 @@ Input.shift = new({"lshift"})
 Input.add = new({"a"})
 Input.delete = new({"delete"})
 Input.deselect = new({"escape"})
+Input.undo = new({"z"})
 
 Input.right = new({"right", "d"})
 Input.left = new({"left", "a"})

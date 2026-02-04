@@ -59,6 +59,10 @@ function Mouse:update(dt)
         Camera:snap_back()
     end
     
+    if Input.mb[1].released or Input.mb[2].released or Input.delete.pressed then
+        Game:undo_push()
+    end
+    
     if self.tile_mode then
         if Input.mb[1].down then
             Game:add_tile(self.tile_x, self.tile_y, self.current_name)
@@ -72,6 +76,7 @@ function Mouse:update(dt)
             else
                 Game:add_img_object(self.tile_x*TILE_SIZE, self.tile_y*TILE_SIZE, self.current_name)
             end
+            Game:undo_push()
         end
         self.selection:update(dt)
     end
@@ -121,6 +126,11 @@ function Mouse:bound_i()
             self.current_i = #OBJECT_TYPES+#IMG_TYPES
         end
     end
+end
+
+-- 외부에서 접근
+function Mouse:deselect_all()
+    self.selection.selected_objects = {}
 end
 
 return Mouse

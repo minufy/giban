@@ -8,6 +8,8 @@ function Edit.init(self)
     self.editing = false
     self.mouse = Mouse:new()
     self.mouse:init()
+    self.undo = {}
+    self.undo_i = 1
 end
 
 function Edit.update(self, dt)
@@ -24,7 +26,12 @@ function Edit.update(self, dt)
     
     if self.editing then
         self.mouse:update(dt)
-        
+        if Input.ctrl.down then
+            if Input.undo.pressed then
+                self.mouse:deselect_all()
+                self:undo_undo()
+            end
+        end
         -- if Input.right.pressed then
         --     self.level_index = self.level_index+1
         --     if self.level_index == 0 then
@@ -97,6 +104,22 @@ function Edit.move_img_object(self, x, y, key)
     self.level.img_objects[key].x = x
     self.level.img_objects[key].y = y
     self:reload()
+end
+
+function Edit.undo_push(self)
+    for i = #self.undo, self.undo_i+1, -1 do
+        table.remove(self.undo, i)
+    end
+    table.insert(self.undo, lume.serialize(self.level))
+    self.undo_i = #self.undo
+end
+
+function Edit.undo_undo(self)
+    if self.undo_i-1 >= 1 then
+        self.undo_i = self.undo_i-1
+        self.level = lume.deserialize(self.undo[self.undo_i])
+        self:reload()
+    end
 end
 
 function Edit.save(self)

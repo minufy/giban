@@ -9,6 +9,8 @@ Game.add_object = Edit.add_object
 Game.add_img_object = Edit.add_img_object
 Game.move_object = Edit.move_object
 Game.move_img_object = Edit.move_img_object
+Game.undo_push = Edit.undo_push
+Game.undo_undo = Edit.undo_undo
 Game.save = Edit.save
 
 local Level = require("scenes.game.level")

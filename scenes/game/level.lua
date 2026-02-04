@@ -43,6 +43,10 @@ function Level.load_level(self)
     if self.level.img_objects == nil then
         self.level.img_objects = {}
     end
+    self.undo = {}
+    if CONSOLE then
+        self:undo_push()
+    end
     self:reload()
 end
 
