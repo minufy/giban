@@ -22,7 +22,7 @@ function Player:update(dt)
     if not self.inited then
         self.inited = true
         Camera:offset(Res.w/2, Res.h/2)
-        Camera:set(self.x, self.y)
+        Camera:set(self.x-self.w/2, self.y-self.h/2)
         Camera:snap_back()
     end
 
