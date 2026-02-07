@@ -10,8 +10,8 @@ end
 
 function PhysicsObject:dist(group_names, r)
     local found = {}
-    for _, group_names in ipairs(group_names) do
-        local group = Game.objects[group_names]
+    for _, group_name in ipairs(group_names) do
+        local group = Game.objects[group_name]
         if group ~= nil then
             for _, other in ipairs(group) do
                 if self ~= other and Dist(self, other) <= r then
@@ -25,8 +25,8 @@ end
 
 function PhysicsObject:col(group_names)
     local found_all = {}
-    for _, group_names in ipairs(group_names) do
-        local group = Game.objects[group_names]
+    for _, group_name in ipairs(group_names) do
+        local group = Game.objects[group_name]
         if group ~= nil then
             local found = self:col_group(group)
             for _, other in ipairs(found) do
