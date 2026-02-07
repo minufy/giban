@@ -1,14 +1,13 @@
----@class PhysicsObject : Object
-local PhysicsObject = Object:new()
+local Physics = {}
 
-function PhysicsObject:init()
+function Physics.init(self)
     self.x = 0
     self.y = 0
     self.w = 0
     self.h = 0
 end
 
-function PhysicsObject:dist(group_names, r)
+function Physics.dist(self, group_names, r)
     local found = {}
     for _, group_name in ipairs(group_names) do
         local group = Game.objects[group_name]
@@ -23,12 +22,12 @@ function PhysicsObject:dist(group_names, r)
     return found
 end
 
-function PhysicsObject:col(group_names)
+function Physics.col(self, group_names)
     local found_all = {}
     for _, group_name in ipairs(group_names) do
         local group = Game.objects[group_name]
         if group ~= nil then
-            local found = self:col_group(group)
+            local found = Physics.col_group(self, group)
             for _, other in ipairs(found) do
                 table.insert(found_all, other)
             end
@@ -37,7 +36,7 @@ function PhysicsObject:col(group_names)
     return found_all
 end
 
-function PhysicsObject:col_group(group)
+function Physics.col_group(self, group)
     local found = {}
     for _, other in ipairs(group) do
         if self ~= other and AABB(self, other) then
@@ -47,7 +46,7 @@ function PhysicsObject:col_group(group)
     return found
 end
 
-function PhysicsObject:solve_x(x, col)
+function Physics.solve_x(self, x, col)
     if col then
         if x > 0 then
             self.x = col.x-self.w
@@ -57,7 +56,7 @@ function PhysicsObject:solve_x(x, col)
     end
 end
 
-function PhysicsObject:solve_y(y, col)
+function Physics.solve_y(self, y, col)
     if col then
         if y > 0 then
             self.y = col.y-self.h
@@ -67,12 +66,12 @@ function PhysicsObject:solve_y(y, col)
     end
 end
 
-function PhysicsObject:move_x(x, f)
+function Physics.move_x(self, x, f)
     local ox = self.x
     self.x = self.x+x
     local tiles = Game.objects["tiles"][1]
     local around = tiles:around(math.floor(self.x/TILE_SIZE+0.5), math.floor(self.y/TILE_SIZE+0.5))
-    local col = self:col_group(around)[1]
+    local col = Physics.col_group(self, around)[1]
     if f ~= nil then
         local col_f = f()
         if #col_f > 0 then
@@ -82,16 +81,16 @@ function PhysicsObject:move_x(x, f)
             col = col or col_f[1]
         end
     end
-    self:solve_x(x, col)
+    Physics.solve_x(self, x, col)
     return col
 end
 
-function PhysicsObject:move_y(y, f)
+function Physics.move_y(self, y, f)
     local oy = self.y
     self.y = self.y+y
     local tiles = Game.objects["tiles"][1]
     local around = tiles:around(math.floor(self.x/TILE_SIZE+0.5), math.floor(self.y/TILE_SIZE+0.5))
-    local col = self:col_group(around)[1]
+    local col = Physics.col_group(self, around)[1]
     if f ~= nil then
         local col_f = f()
         if #col_f > 0 then
@@ -101,8 +100,8 @@ function PhysicsObject:move_y(y, f)
             col = col or col_f[1]
         end
     end
-    self:solve_y(y, col)
+    Physics.solve_y(self, y, col)
     return col
 end
 
-return PhysicsObject
+return Physics

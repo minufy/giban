@@ -1,11 +1,6 @@
-local PhysicsObject = require("objects.physics_object")
-
----@class Selection : PhysicsObject
-local Selection = PhysicsObject:new()
+local Selection = Object:new()
 
 function Selection:init(mouse)
-    PhysicsObject.init(self)
-    
     self.mouse = mouse
 
     self.x = 0
@@ -66,14 +61,14 @@ function Selection:update_selection(dt)
     end
     
     if Input.mb[1].released then
-        local col = self:col(get_group_names())
+        local col = Physics.col(self, get_group_names())
         self.selected_objects = col
     end
 end
 
 function Selection:draw_selected_objects()
     for i, object in ipairs(self.selected_objects) do
-        love.graphics.setLineWidth(4)
+        love.graphics.setLineWidth(2)
         love.graphics.setColor(0, 1, 1, 0.6)
         love.graphics.rectangle("line", object.x, object.y, object.w, object.h)
     end
@@ -81,7 +76,7 @@ end
 
 function Selection:update_before_selected_objects()
     if Input.mb[1].pressed then
-        local col = self.mouse:col(get_group_names())
+        local col = Physics.col(self.mouse, get_group_names())
         if #col <= 0 then
             self.selected_objects = {}
             return

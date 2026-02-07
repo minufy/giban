@@ -1,4 +1,3 @@
----@class Tiles : Object
 local Tiles = Object:new()
 
 function Tiles:init(tiles)

@@ -1,14 +1,9 @@
-local PhysicsObject = require("objects.physics_object")
-
----@class Player : PhysicsObject
-local Player = PhysicsObject:new()
+local Player = Object:new()
 
 local img = NewImage("player")
 
 function Player:init(x, y)
     self.group_name = "player"
-
-    PhysicsObject.init(self)
 
     self.x = x
     self.y = y
@@ -28,10 +23,10 @@ function Player:update(dt)
 
     Camera:set(self.x, self.y)
     if Input.right.down then
-        self:move_x(4*dt)
+        Physics.move_x(self, 4*dt)
     end
     if Input.left.down then
-        self:move_x(-4*dt)
+        Physics.move_x(self, -4*dt)
     end
 end
 

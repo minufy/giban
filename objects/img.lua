@@ -1,4 +1,3 @@
----@class Img : Object
 local Img = Object:new()
 
 function Img:init(x, y, type)

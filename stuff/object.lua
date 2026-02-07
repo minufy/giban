@@ -1,5 +1,4 @@
----@class Object
-Object = {}
+local Object = {}
 
 function Object:new(obj)
     obj = obj or {}
@@ -7,3 +6,5 @@ function Object:new(obj)
     self.__index = self
     return obj
 end
+
+return Object

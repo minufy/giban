@@ -1,4 +1,6 @@
-require("stuff.object")
+Object = require("stuff.object")
+Physics = require("objects.physics")
+Particle = require("objects.particle")
 require("stuff.camera")
 require("stuff.input")
 require("stuff.res")

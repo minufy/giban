@@ -1,13 +1,8 @@
-local PhysicsObject = require("objects.physics_object")
-
 local Selection = require("objects.mouse.selection")
 
----@class Mouse : PhysicsObject
-local Mouse = PhysicsObject:new()
+local Mouse = Object:new()
 
 function Mouse:init()
-    PhysicsObject.init(self)
-    
     self.group_name = "mouse"
 
     self.x = 0
@@ -70,7 +65,7 @@ function Mouse:update(dt)
             Game:remove_tile(self.tile_x, self.tile_y)
         end
     else
-        if Input.shift.down and Input.add.pressed then
+        if Input.shift.down and Input.mb[1].pressed then
             if IMG_TABLE[self.current_name] == nil then
                 Game:add_object(self.tile_x*TILE_SIZE, self.tile_y*TILE_SIZE, self.current_name)
             else
@@ -92,7 +87,7 @@ function Mouse:draw()
     love.graphics.print(self.current_name, x+10, y+10)
     
     self.selection:draw()
-
+    
     ResetColor()
 end
 
