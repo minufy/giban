@@ -33,7 +33,7 @@ end
 
 function Selection:update_selection(dt)
     if Input.mb[1].pressed then
-        local col = self.mouse:col(get_group_names())
+        local col = Physics.col(self.mouse, get_group_names())
         if #col > 0 then
             self.selected_objects = {col[1]}
             return
