@@ -1,12 +1,5 @@
 local Physics = {}
 
-function Physics.init(self)
-    self.x = 0
-    self.y = 0
-    self.w = 0
-    self.h = 0
-end
-
 function Physics.dist(self, group_names, r)
     local found = {}
     for _, group_name in ipairs(group_names) do
