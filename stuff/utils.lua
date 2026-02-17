@@ -41,18 +41,19 @@ end
 Logs = {}
 LogTime = 240
 function Log(...)
-    for i, text in ipairs({...}) do
-        text = os.date().." : "..text
-        table.insert(Logs, {text=text, timer=0})
-        print(text)
+    local text = os.date().." : "
+    for i, t in ipairs({...}) do
+        text = text..t.." "
     end
+    table.insert(Logs, {text=text, timer=0})
+    print(text)
 end
 
 function DrawLog()
     love.graphics.setFont(LogFont)
     for i, log in ipairs(Logs) do
         love.graphics.setColor(1, 1, 1, 1-log.timer/LogTime)
-        love.graphics.print(log.text, 0, (i-1)*LogFont:getHeight())
+        love.graphics.print(log.text, 0, (#Logs-i)*LogFont:getHeight())
     end
     ResetColor()
 end
@@ -90,4 +91,8 @@ function NewSound(name, volume)
     end
     Sounds[name] = sound
     return sound
+end
+
+function SinEffect()
+    return math.sin(love.timer.getTime()*4)
 end
