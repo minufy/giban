@@ -14,7 +14,7 @@ function love.load()
     love.graphics.setLineStyle("rough")
 
     Font = love.graphics.newFont("assets/fonts/Galmuri9.ttf", 10)
-    TILE_SIZE = 32
+    TILE_SIZE = 16
 
     Sounds = {}
     -- NewSound("jump")

@@ -92,7 +92,3 @@ function NewSound(name, volume)
     Sounds[name] = sound
     return sound
 end
-
-function SinEffect()
-    return math.sin(love.timer.getTime()*4)
-end
