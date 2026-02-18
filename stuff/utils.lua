@@ -83,9 +83,9 @@ function NewSound(name, volume)
         source = love.audio.newSource("assets/sounds/"..name..".ogg", "static"),
         volume = volume
     }
-    function sound:play(volume)
-        volume = volume or self.volume
-        self.source:setVolume(volume)
+    function sound:play(v)
+        v = v or self.volume
+        self.source:setVolume(v)
         self.source:stop()
         self.source:play()
     end
