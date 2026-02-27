@@ -7,6 +7,8 @@ function Player:init(x, y)
 
     self.x = x
     self.y = y
+    self.vx = 0
+    self.vy = 0
     self.w = img:getWidth()
     self.h = img:getHeight()
 
@@ -22,12 +24,15 @@ function Player:update(dt)
     end
 
     Camera:set(self.x, self.y)
+    self.vx = 0
     if Input.right.down then
-        Physics.move_x(self, 4*dt)
+        self.vx = self.vx+3*dt
     end
     if Input.left.down then
-        Physics.move_x(self, -4*dt)
+        self.vx = self.vx-3*dt
     end
+    local found = Physics.move_and_col(self)
+    Physics.solve_x(self, found[1])
 end
 
 function Player:draw()
