@@ -59,9 +59,9 @@ function Physics.solve_y(self, col)
     end
 end
 
-function Physics.move_and_col(self, layers)
-    self.x = self.x+self.vx
-    self.y = self.y+self.vy
+function Physics.move_and_col(self, x, y, layers)
+    self.x = self.x+x
+    self.y = self.y+y
     layers = layers or {1}
     local found_all = {}
     for i, layer in ipairs(layers) do

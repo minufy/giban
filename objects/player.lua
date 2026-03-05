@@ -31,8 +31,8 @@ function Player:update(dt)
     if Input.left.down then
         self.vx = self.vx-3*dt
     end
-    local found = Physics.move_and_col(self)
-    Physics.solve_x(self, found[1])
+    local found_x = Physics.move_and_col(self, self.vx, 0)
+    Physics.solve_x(self, found_x[1])
 end
 
 function Player:draw()
