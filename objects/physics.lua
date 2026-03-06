@@ -39,9 +39,9 @@ function Physics.col_group(self, group)
     return found
 end
 
-function Physics.solve_x(self, col)
+function Physics.solve_x(self, x, col)
     if col then
-        if self.vx > 0 then
+        if x > 0 then
             self.x = col.x-self.w
         else
             self.x = col.x+col.w
@@ -49,9 +49,9 @@ function Physics.solve_x(self, col)
     end
 end
 
-function Physics.solve_y(self, col)
+function Physics.solve_y(self, y, col)
     if col then
-        if self.vy > 0 then
+        if y > 0 then
             self.y = col.y-self.h
         else
             self.y = col.y+col.h
