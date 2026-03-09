@@ -1,6 +1,6 @@
 {
     "Lua.workspace.library": [
-        "E:/VSCode-win32-x64-1.110.1/lua-addons/love2d-97fa46cd694e09f953157a5c71e7e9adeb99d0c8/library"
+        "${addons}/love2d/module/library"
     ],
     "Lua.runtime.version": "LuaJIT",
     "Lua.runtime.special": {
