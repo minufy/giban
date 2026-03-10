@@ -10,18 +10,15 @@ function Player:init(x, y)
     self.w = img:getWidth()
     self.h = img:getHeight()
 
-    self.inited = false
-end
-
-function Player:update(dt)
-    if not self.inited then
-        self.inited = true
+    if not Game.editing then
         Camera:offset(Res.w/2, Res.h/2)
         Camera:set(self.x-self.w/2, self.y-self.h/2)
         Camera:snap_back()
     end
+end
 
-    Camera:set(self.x, self.y)
+function Player:update(dt)
+    Camera:set(self.x-self.w/2, self.y-self.h/2)
     local ix = 0
     if Input.right.down then
         ix = ix+1

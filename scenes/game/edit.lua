@@ -16,6 +16,9 @@ function Edit.update(self, dt)
     if CONSOLE then
         if Input.toggle_editor.pressed then
             self.editing = not self.editing
+            if not self.editing then
+                self:reload()
+            end
         end
         if Input.ctrl.down then
             if Input.save.pressed then
