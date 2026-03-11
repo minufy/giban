@@ -92,10 +92,17 @@ function Mouse:draw()
 end
 
 function Mouse:draw_hud()
+    local y = 0
     love.graphics.setFont(Font)
-    love.graphics.print(math.floor(self.x+0.5)..","..math.floor(self.y+0.5))
+
+    love.graphics.print(math.floor(self.x+0.5)..","..math.floor(self.y+0.5), 0, y)
+
+    y = y+Font:getHeight()
+    love.graphics.print(self.tile_x..","..self.tile_y, 0, y)
+    
+    y = y+Font:getHeight()
     local keys_str = self.selection:get_key_str()
-    love.graphics.print(keys_str, 0, Font:getHeight())
+    love.graphics.print(keys_str, 0, y)
 end
 
 function Mouse:set()
