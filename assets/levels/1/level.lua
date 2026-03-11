@@ -1,1 +1,1 @@
-return {["objects"]={["0x025f8886ff30"]={["x"]=544,["y"]=224,["type"]="point"},["0x025f8653c5a0"]={["x"]=592,["y"]=224,["type"]="point"},["0x023df97d11a0"]={["x"]=464,["y"]=256,["type"]="player"},["0x025fffea3ce8"]={["x"]=496,["y"]=224,["type"]="point"},["0x025f86515970"]={["x"]=400,["y"]=224,["type"]="point"},["0x025f86504c80"]={["x"]=448,["y"]=224,["type"]="point"}},["img_objects"]={},["tiles"]={}}
+return {["objects"]={},["img_objects"]={},["tiles"]={["0,0"]={["type"]="tile",["x"]=0,["y"]=0}}}
