@@ -63,3 +63,4 @@ Input.undo = new({"z"})
 
 Input.right = new({"right", "d"})
 Input.left = new({"left", "a"})
+Input.add_script = new({"backspace"})

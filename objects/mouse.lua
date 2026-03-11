@@ -91,6 +91,13 @@ function Mouse:draw()
     ResetColor()
 end
 
+function Mouse:draw_hud()
+    love.graphics.setFont(Font)
+    love.graphics.print(math.floor(self.x+0.5)..","..math.floor(self.y+0.5))
+    local keys_str = self.selection:get_key_str()
+    love.graphics.print(keys_str, 0, Font:getHeight())
+end
+
 function Mouse:set()
     self:bound_i()
     self:find_name()

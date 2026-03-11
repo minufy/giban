@@ -1,4 +1,4 @@
-SCALE = 3
+SCALE = 2
 
 Res = {}
 Res.w = WINDOW_W/SCALE

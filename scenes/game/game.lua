@@ -70,8 +70,12 @@ function Game:draw()
     if self.editing then
         Edit.draw(self)
     end
-
+    
     Camera:stop()
+
+    if self.editing then
+        Edit.draw_hud(self)
+    end
 end
 
 return Game

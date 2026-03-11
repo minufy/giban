@@ -1,5 +1,5 @@
-WINDOW_W = 1280
-WINDOW_H = 720
+WINDOW_W = 800
+WINDOW_H = 600
 CONSOLE = true
 
 function love.conf(t)

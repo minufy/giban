@@ -53,6 +53,10 @@ function Edit.draw(self)
     self.mouse:draw()
 end
 
+function Edit.draw_hud(self)
+    self.mouse:draw_hud()
+end
+
 function Edit.add_object(self, x, y, type)
     local data = {
         x = x,
@@ -126,8 +130,18 @@ function Edit.undo_undo(self)
 end
 
 function Edit.save(self)
+    for k, o in pairs(self.level.objects) do
+        local path = "assets/levels/"..self.level_index.."/"..k..".lua"
+        local file = io.open(path, "r")
+        if file then
+            file = io.open(path, "w")
+            if file then
+                file:close()
+            end
+        end
+    end
     local data = "return "..lume.serialize(self.level)
-    local path = "assets/levels/"..self.level_index..".lua"
+    local path = "assets/levels/"..self.level_index.."/level.lua"
     local file, err = io.open(path, "w")
     if file then
         file:write(data)

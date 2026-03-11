@@ -133,6 +133,25 @@ function Selection:update_selected_objects(dt)
     end
 end
 
+function Selection:add_script()
+    for i, o in ipairs(self.selected_objects) do
+        local path = "assets/levels/"..Game.level_index.."/"..o.key..".lua"
+        local file = io.open(path, "w")
+        if file then
+            file:close()
+        end
+        Log("script added for "..o.key)
+    end
+end
+
+function Selection:get_key_str()
+    local str = ""
+    for i, o in ipairs(self.selected_objects) do
+        str = str..","..o.key
+    end
+    return str
+end
+
 function Selection:update(dt)
     if Input.mb[1].pressed then
         self.start_x = self.mouse.x
@@ -147,6 +166,9 @@ function Selection:update(dt)
     if Input.mb[1].released then
         self.w = 0
         self.h = 0
+    end
+    if Input.ctrl.down and Input.add_script.pressed then
+        self:add_script()
     end
 end
 
