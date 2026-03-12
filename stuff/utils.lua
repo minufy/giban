@@ -102,3 +102,11 @@ function Round(x, r, ofs)
     ofs = ofs or 0.5
     return math.floor(x/r+ofs)
 end
+
+function SinEffect()
+    return math.sin(love.timer.getTime()*4)
+end
+
+function EaseOut(x)
+    return 1-(1-x)^2
+end
