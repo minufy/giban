@@ -57,7 +57,7 @@ Input.ctrl = new({"lctrl"})
 Input.save = new({"s"})
 Input.shift = new({"lshift"})
 Input.add = new({"a"})
-Input.delete = new({"delete"})
+Input.delete = new({"delete", "x"})
 Input.deselect = new({"escape"})
 Input.undo = new({"z"})
 
