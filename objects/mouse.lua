@@ -24,11 +24,11 @@ function Mouse:init()
 end
 
 function Mouse:update(dt)
-    self.x = Res:getX()+Camera.x
-    self.y = Res:getY()+Camera.y
+    self.x = Res:get_x()+Camera.x
+    self.y = Res:get_y()+Camera.y
 
-    self.dx = self.dx-Res:getX()
-    self.dy = self.dy-Res:getY()
+    self.dx = self.dx-Res:get_x()
+    self.dy = self.dy-Res:get_y()
     
     self.tile_x = math.floor(self.x/TILE_SIZE)
     self.tile_y = math.floor(self.y/TILE_SIZE)
@@ -76,12 +76,12 @@ function Mouse:update(dt)
         self.selection:update(dt)
     end
 
-    self.dx = Res:getX()
-    self.dy = Res:getY()
+    self.dx = Res:get_x()
+    self.dy = Res:get_y()
 end
 
 function Mouse:draw()
-    local x, y = Res:getX()+Camera.x, Res:getY()+Camera.y
+    local x, y = Res:get_x()+Camera.x, Res:get_y()+Camera.y
     love.graphics.circle("fill", x, y, 2)
     love.graphics.setFont(Font)
     love.graphics.print(self.current_name, x+10, y+10)

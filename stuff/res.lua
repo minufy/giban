@@ -46,11 +46,11 @@ function Res:after()
     love.graphics.pop()
 end
 
-function Res:getX()
+function Res:get_x()
     return (love.mouse.getX()-self.shift.x)/self.zoom
 end
 
-function Res:getY()
+function Res:get_y()
     return (love.mouse.getY()-self.shift.y)/self.zoom
 end
 
