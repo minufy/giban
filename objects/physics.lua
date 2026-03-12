@@ -66,7 +66,7 @@ function Physics.move_and_col(self, x, y, layers)
     local found_all = {}
     for i, layer in ipairs(layers) do
         local tiles = Game.objects["tiles"][layer]
-        local around = tiles:around(math.floor(self.x/TILE_SIZE+0.5), math.floor(self.y/TILE_SIZE+0.5))
+        local around = tiles:around(Round(self.x, TILE_SIZE), Round(self.y, TILE_SIZE))
         local found = Physics.col_group(self, around)
         for _, other in ipairs(found) do
             table.insert(found_all, other)

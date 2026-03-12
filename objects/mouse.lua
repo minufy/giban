@@ -24,11 +24,11 @@ function Mouse:init()
 end
 
 function Mouse:update(dt)
-    self.x = Res:get_x()+Camera.x
-    self.y = Res:get_y()+Camera.y
+    self.x = Res:getX()+Camera.x
+    self.y = Res:getY()+Camera.y
 
-    self.dx = self.dx-Res:get_x()
-    self.dy = self.dy-Res:get_y()
+    self.dx = self.dx-Res:getX()
+    self.dy = self.dy-Res:getY()
     
     self.tile_x = math.floor(self.x/TILE_SIZE)
     self.tile_y = math.floor(self.y/TILE_SIZE)
@@ -59,10 +59,14 @@ function Mouse:update(dt)
     end
     
     if self.tile_mode then
-        if Input.mb[1].down then
-            Game:add_tile(self.tile_x, self.tile_y, self.current_name)
-        elseif Input.mb[2].down then
-            Game:remove_tile(self.tile_x, self.tile_y)
+        if Input.ctrl.down then
+            self.selection:update_tile()
+        else
+            if Input.mb[1].down then
+                Game:add_tile(self.tile_x, self.tile_y, self.current_name)
+            elseif Input.mb[2].down then
+                Game:remove_tile(self.tile_x, self.tile_y)
+            end
         end
     else
         if Input.shift.down and Input.mb[1].pressed then
@@ -73,15 +77,15 @@ function Mouse:update(dt)
             end
             Game:undo_push()
         end
-        self.selection:update(dt)
+        self.selection:update()
     end
 
-    self.dx = Res:get_x()
-    self.dy = Res:get_y()
+    self.dx = Res:getX()
+    self.dy = Res:getY()
 end
 
 function Mouse:draw()
-    local x, y = Res:get_x()+Camera.x, Res:get_y()+Camera.y
+    local x, y = Res:getX()+Camera.x, Res:getY()+Camera.y
     love.graphics.circle("fill", x, y, 2)
     love.graphics.setFont(Font)
     love.graphics.print(self.current_name, x+10, y+10)
@@ -95,7 +99,7 @@ function Mouse:draw_hud()
     local y = 0
     love.graphics.setFont(Font)
 
-    love.graphics.print(math.floor(self.x+0.5)..","..math.floor(self.y+0.5), 0, y)
+    love.graphics.print(Round(self.x)..","..Round(self.y), 0, y)
 
     y = y+Font:getHeight()
     love.graphics.print(self.tile_x..","..self.tile_y, 0, y)

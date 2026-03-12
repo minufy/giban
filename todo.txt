@@ -1,3 +1,2 @@
 ctrl c v y d x
-drag select / create tiles
 tile layers

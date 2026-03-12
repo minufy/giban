@@ -92,3 +92,13 @@ function NewSound(name, volume)
     Sounds[name] = sound
     return sound
 end
+
+function RoundS(x, r, ofs)
+    return Round(x, r, ofs)*r
+end
+
+function Round(x, r, ofs)
+    r = r or 1
+    ofs = ofs or 0.5
+    return math.floor(x/r+ofs)
+end
