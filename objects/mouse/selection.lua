@@ -147,7 +147,11 @@ end
 function Selection:get_key_str()
     local str = ""
     for i, o in ipairs(self.selected_objects) do
-        str = str..","..o.key
+        if i > 1 then
+            str = str..","..o.key
+        else
+            str = o.key
+        end
     end
     return str
 end
